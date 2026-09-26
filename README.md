@@ -139,6 +139,32 @@ python scripts/snapjudge_llm.py serve --backend claude --port 8787 --auth-token 
 
 The probabilities are the model's own estimates, not calibrated scores like the local heads, and each request takes seconds instead of milliseconds (about 4–9 s with Haiku or gpt-6-luna). `usage` reports tokens, plus `cost_usd` for the `claude` backend; on a Pro/Max plan this counts against the plan's usage limits rather than being billed. If `ANTHROPIC_API_KEY` is set, Claude Code bills that key instead of your plan, and `status` warns about it. Copilot calls count as Copilot requests on your GitHub plan.
 
+## Local or hosted: which to use
+
+Measured on the same 220 questions (20 from each of 11 held-out classification tasks: topics, sentiment, star ratings, support triage, passage relevance, prompt injection, moderation, claim checking, tool selection, tool-call risk and pairwise answer comparison), on a base Apple M4 with 16 GB.
+
+| | 🟢 SnapJudge 4B (local) | ⚡ SnapJudge 2B (local) | ☁️ `snapjudge_llm.py` (Claude Haiku) |
+|---|---|---|---|
+| **Accuracy (11 tasks)** | **77.3%** | 70.0% | 76.8% |
+| **Latency p50 / p90** | 344 / 735 ms | **121 / 254 ms** | 5,003 / 6,782 ms |
+| **Speed vs hosted** | ~15× faster | ~41× faster | 1× |
+| **Memory on this Mac** | ~3.6 GB | ~2.3 GB | **~0.2 GB** (the model runs remotely) |
+| **Disk** | 2.1 GB model + 65 MB heads | 0.87 GB model + 55 MB heads | None (needs Python 3.11+ and the SDKs) |
+| **Cost** | Free | Free | ~$0.0065 per request (on a Claude plan, counted against its usage) |
+| **Works offline** | ✅ | ✅ | ❌ |
+| **Calibrated probabilities** | ✅ | ✅ | ❌ The model's own estimates |
+
+The local 4B is as accurate as the hosted model overall. The hosted model does better on fine-grained star ratings and on comparing two answers; the local models do better on topic classification, passage relevance, moderation and tool-call risk. With 20 questions per task, per-task differences are indicative only (about ±20 points); the overall figures are reliable to about ±6.
+
+Local memory includes about 0.5 GB of Python overhead and MLX's 1 GB buffer cache. The hosted figure is the local server plus its short-lived `claude` helper process.
+
+| Situation | Use |
+|---|---|
+| Default: fast, private, free, calibrated | **SnapJudge 4B** |
+| Tight latency or memory with clear-cut checks (gates, routing, tool choice) | **SnapJudge 2B** (`--size 2b`) |
+| Fine-grained ratings, comparing two answers, or a second opinion on hard cases | **`snapjudge_llm.py`** |
+| Best of both | Run the 4B first and send only low-confidence answers (for example `confidence` below 0.6) to `snapjudge_llm.py`. Most traffic stays local and fast; only the hard cases pay the latency and cost |
+
 ## Request format
 
 ```json
