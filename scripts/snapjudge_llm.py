@@ -27,7 +27,9 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-CONFIG_PATH = Path(os.environ.get("SNAPJUDGE_LLM_CONFIG", Path.home() / ".config" / "snapjudge" / "llm.json"))
+CONFIG_DIR = Path.home() / ".config" / "snapjudge"
+CONFIG_PATH = Path(os.environ.get("SNAPJUDGE_LLM_CONFIG", CONFIG_DIR / "snapjudge_llm.json"))
+LEGACY_CONFIG_PATH = CONFIG_DIR / "llm.json"
 
 DEFAULT_MODELS = {
     "claude": "haiku",
@@ -60,6 +62,9 @@ class JudgeError(Exception):
 # ---------------------------------------------------------------- config
 
 def load_config():
+    # Logins saved before the rename live in llm.json; move them so they keep working.
+    if "SNAPJUDGE_LLM_CONFIG" not in os.environ and not CONFIG_PATH.exists() and LEGACY_CONFIG_PATH.exists():
+        os.replace(LEGACY_CONFIG_PATH, CONFIG_PATH)
     try:
         return json.loads(CONFIG_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
