@@ -5,8 +5,7 @@
     python scripts/download_model.py --variant both
     python scripts/download_model.py --variant 2b      # 2B model -> models/snapjudge-2b (use with --size 2b)
 
-Uses the GitHub CLI (`gh`) when available, which also works while the repository is private;
-otherwise falls back to plain HTTPS downloads, which need the repository to be public.
+Uses the GitHub CLI (`gh`) when available; otherwise plain HTTPS downloads.
 """
 import argparse, hashlib, os, shutil, subprocess, tarfile, urllib.request
 from pathlib import Path

@@ -50,7 +50,7 @@ The model files are attached to the [v0.2.0 release](https://github.com/scgopi/S
 
 - A Mac with Apple silicon (M1 or later). Tested on a base M4 with 16 GB of memory.
 - Python 3.10+.
-- The [GitHub CLI](https://cli.github.com) (`gh`, logged in) to download the model while the repository is private.
+- An internet connection for the one-time model download (the [GitHub CLI](https://cli.github.com) is used if installed; otherwise plain HTTPS).
 
 ## Setup
 
