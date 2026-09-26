@@ -150,7 +150,6 @@ Measured on the same 220 questions (20 from each of 11 held-out classification t
 | **Speed vs hosted** | ~15× faster | ~41× faster | 1× |
 | **Memory on this Mac** | ~3.6 GB | ~2.3 GB | **~0.2 GB** (the model runs remotely) |
 | **Disk** | 2.1 GB model + 65 MB heads | 0.87 GB model + 55 MB heads | None (needs Python 3.11+ and the SDKs) |
-| **Cost** | Free | Free | ~$0.0065 per request (on a Claude plan, counted against its usage) |
 | **Works offline** | ✅ | ✅ | ❌ |
 | **Calibrated probabilities** | ✅ | ✅ | ❌ The model's own estimates |
 
@@ -160,10 +159,10 @@ Local memory includes about 0.5 GB of Python overhead and MLX's 1 GB buffer cach
 
 | Situation | Use |
 |---|---|
-| Default: fast, private, free, calibrated | **SnapJudge 4B** |
+| Default: fast, private, calibrated | **SnapJudge 4B** |
 | Tight latency or memory with clear-cut checks (gates, routing, tool choice) | **SnapJudge 2B** (`--size 2b`) |
 | Fine-grained ratings, comparing two answers, or a second opinion on hard cases | **`snapjudge_llm.py`** |
-| Best of both | Run the 4B first and send only low-confidence answers (for example `confidence` below 0.6) to `snapjudge_llm.py`. Most traffic stays local and fast; only the hard cases pay the latency and cost |
+| Best of both | Run the 4B first and send only low-confidence answers (for example `confidence` below 0.6) to `snapjudge_llm.py`. Most traffic stays local and fast; only the hard cases pay the extra latency |
 
 ## Request format
 
