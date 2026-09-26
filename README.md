@@ -102,9 +102,9 @@ response = judge.classify({
 print(response["answers"]["urgent"]["noul"])   # 0.957
 ```
 
-## Hosted LLM backend (`scripts/llm_judge.py`)
+## Hosted LLM backend (`scripts/snapjudge_llm.py`)
 
-`scripts/llm_judge.py` answers the same requests with the same response shape, using a small hosted model instead of the local one. Use it on machines without Apple silicon, to compare against the local model, or as the "larger model" that low-confidence cases go to. It needs Python 3.11+ and no model download.
+`scripts/snapjudge_llm.py` answers the same requests with the same response shape, using a small hosted model instead of the local one. Use it on machines without Apple silicon, to compare against the local model, or as the "larger model" that low-confidence cases go to. It needs Python 3.11+ and no model download.
 
 | Backend | SDK | Signs in with | Default model |
 |---|---|---|---|
@@ -115,18 +115,18 @@ print(response["answers"]["urgent"]["noul"])   # 0.957
 ```sh
 pip install -r scripts/requirements-llm.txt
 
-python scripts/llm_judge.py status                   # which backends are signed in
-python scripts/llm_judge.py login claude             # browser sign-in (claude auth login)
-python scripts/llm_judge.py login claude --token     # long-lived plan token for CI (claude setup-token)
-python scripts/llm_judge.py login anthropic          # paste an API key; it is verified and saved (mode 600)
-python scripts/llm_judge.py login copilot            # copilot login (--device-code on headless machines, --gh for gh auth login)
-python scripts/llm_judge.py login copilot --token    # save a GitHub token with Copilot access
-python scripts/llm_judge.py logout <backend>
+python scripts/snapjudge_llm.py status                   # which backends are signed in
+python scripts/snapjudge_llm.py login claude             # browser sign-in (claude auth login)
+python scripts/snapjudge_llm.py login claude --token     # long-lived plan token for CI (claude setup-token)
+python scripts/snapjudge_llm.py login anthropic          # paste an API key; it is verified and saved (mode 600)
+python scripts/snapjudge_llm.py login copilot            # copilot login (--device-code on headless machines, --gh for gh auth login)
+python scripts/snapjudge_llm.py login copilot --token    # save a GitHub token with Copilot access
+python scripts/snapjudge_llm.py logout <backend>
 
-python scripts/llm_judge.py classify examples/ticket.json                       # claude / haiku
-python scripts/llm_judge.py classify examples/guardrail.json --backend copilot --explain
-python scripts/llm_judge.py classify examples/review.json --backend copilot --model claude-haiku-4.5 --samples 3
-python scripts/llm_judge.py serve --backend claude --port 8787 --auth-token s3cret   # POST /v1/classify, GET /health
+python scripts/snapjudge_llm.py classify examples/ticket.json                       # claude / haiku
+python scripts/snapjudge_llm.py classify examples/guardrail.json --backend copilot --explain
+python scripts/snapjudge_llm.py classify examples/review.json --backend copilot --model claude-haiku-4.5 --samples 3
+python scripts/snapjudge_llm.py serve --backend claude --port 8787 --auth-token s3cret   # POST /v1/classify, GET /health
 ```
 
 | Option | Effect |
@@ -454,7 +454,7 @@ snapjudge/           inference package (SnapJudge class, CLI)
 weights/             4B heads, normalisation stats, calibration, config.json
 weights-2b/          2B heads, normalisation stats, calibration, config.json
 scripts/             download_model.py (release download), prepare_backbone.py (build from Hugging Face),
-                     llm_judge.py (hosted LLM backend)
+                     snapjudge_llm.py (hosted LLM backend)
 examples/            request files used above
 models/              backbones installed by the scripts (not in git)
 LICENSE              MIT

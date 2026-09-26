@@ -7,10 +7,10 @@ Backends:
   anthropic  Anthropic API SDK. Uses an API key (or Amazon Bedrock / Google Vertex AI).
   copilot    GitHub Copilot SDK. Uses your gh / Copilot CLI login or a GitHub token.
 
-  python scripts/llm_judge.py status
-  python scripts/llm_judge.py login claude
-  python scripts/llm_judge.py classify examples/ticket.json --backend copilot --model gpt-6-luna
-  python scripts/llm_judge.py serve --backend claude --port 8787
+  python scripts/snapjudge_llm.py status
+  python scripts/snapjudge_llm.py login claude
+  python scripts/snapjudge_llm.py classify examples/ticket.json --backend copilot --model gpt-6-luna
+  python scripts/snapjudge_llm.py serve --backend claude --port 8787
 """
 
 import argparse
@@ -453,7 +453,7 @@ def cmd_serve(args):
 def run_cli(cmd):
     exe = shutil.which(cmd[0])
     if not exe:
-        sys.exit(f"`{cmd[0]}` is not on PATH. Install it first (see `llm_judge.py login --help`).")
+        sys.exit(f"`{cmd[0]}` is not on PATH. Install it first (see `snapjudge_llm.py login --help`).")
     return subprocess.call([exe, *cmd[1:]])
 
 
@@ -484,7 +484,7 @@ def cmd_login(args):
             sys.exit("no token entered")
         cfg["github_token"] = token
         save_config(cfg)
-        print(f"token saved to {CONFIG_PATH} (mode 600); run `llm_judge.py status` to verify it")
+        print(f"token saved to {CONFIG_PATH} (mode 600); run `snapjudge_llm.py status` to verify it")
         return
     if args.gh:
         sys.exit(run_cli(["gh", "auth", "login", "--web"]))
@@ -599,7 +599,7 @@ def add_backend_args(p):
 
 
 def main():
-    ap = argparse.ArgumentParser(prog="llm_judge.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(prog="snapjudge_llm.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("classify", help="answer one request file")
