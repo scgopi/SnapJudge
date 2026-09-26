@@ -1,0 +1,20 @@
+{
+  "state": "The food was cold and the waiter ignored us, but the dessert was lovely.",
+  "questions": {
+    "stars": {
+      "type": "score",
+      "instructions": "How positive is the review in `state`?",
+      "criteria": [
+        "Very negative",
+        "Negative",
+        "Mixed",
+        "Positive",
+        "Very positive"
+      ]
+    },
+    "mentions_service": {
+      "type": "noul",
+      "instructions": "Does `state` mention the service?"
+    }
+  }
+}

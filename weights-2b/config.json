@@ -1,0 +1,19 @@
+{
+  "name": "SnapJudge 2B",
+  "version": "0.2.0",
+  "backbone": {
+    "repo": "mlx-community/Qwen3.5-2B-MLX-4bit",
+    "layers": 18,
+    "hidden_size": 2048,
+    "folders": [
+      "snapjudge-2b"
+    ]
+  },
+  "heads": 5,
+  "max_options": 12,
+  "temperature": {
+    "noul": 1.1110306978225708,
+    "choice": 1.1608567237854004,
+    "score": 0.9322146773338318
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "state": "Subject: Payout failures for three days\n\nHi team, since Monday every payout to our connected accounts has failed with error code PAY-502. We process roughly 400 payouts a day for small merchants, and several of them have now missed rent. Your status page says everything is operational. We have already rotated API keys and checked our webhook endpoint, which returns 200. This is costing us customers and I need someone senior to look at it today. If this is not fixed by Friday we will have to move to another provider. Our account ID is acct_19XK.",
+  "questions": {
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle this?",
+      "criteria": {
+        "billing": "Payments, invoicing, refunds",
+        "technical": "Bugs, outages, integrations",
+        "sales": "Pricing, upgrades, new accounts"
+      }
+    },
+    "urgent": {
+      "type": "noul",
+      "instructions": "Is the customer describing an urgent, ongoing problem?"
+    },
+    "churn_risk": {
+      "type": "noul",
+      "instructions": "Is the customer threatening to leave?"
+    },
+    "tone": {
+      "type": "score",
+      "instructions": "How frustrated is the author of `state`?",
+      "criteria": [
+        "Calm",
+        "Mildly annoyed",
+        "Frustrated",
+        "Furious"
+      ]
+    },
+    "tried_fixes": {
+      "type": "noul",
+      "instructions": "Has the customer already tried to fix the problem themselves?"
+    }
+  }
+}

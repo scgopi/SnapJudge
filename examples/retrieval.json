@@ -1,0 +1,21 @@
+{
+  "state": {
+    "question": "How long does a refund take to reach my bank account?",
+    "passage": "Refunds are issued to the original payment method within 5-7 business days after we receive the returned item."
+  },
+  "questions": {
+    "answers_question": {
+      "type": "noul",
+      "instructions": "The passage answers the question."
+    },
+    "relevance": {
+      "type": "score",
+      "instructions": "How relevant is `state.passage` to `state.question`?",
+      "criteria": [
+        "Irrelevant",
+        "Related",
+        "Directly answers"
+      ]
+    }
+  }
+}

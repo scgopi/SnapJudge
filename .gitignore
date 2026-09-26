@@ -1,0 +1,8 @@
+models/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+dist/
+release/
+release2/

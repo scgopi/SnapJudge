@@ -1,0 +1,18 @@
+{
+  "state": "Help! My payouts have been failing for 3 days.",
+  "questions": {
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle this?",
+      "criteria": {
+        "billing": "Payments, invoicing, refunds",
+        "technical": "Bugs, outages, integrations",
+        "sales": "Pricing, upgrades, new accounts"
+      }
+    },
+    "urgent": {
+      "type": "noul",
+      "instructions": "Is the customer describing an urgent, ongoing problem?"
+    }
+  }
+}

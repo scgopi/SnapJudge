@@ -1,0 +1,15 @@
+{
+  "state": "What's the weather going to be like in Paris tomorrow afternoon?",
+  "questions": {
+    "tool": {
+      "type": "choice",
+      "instructions": "Which tool should handle `state`?",
+      "criteria": {
+        "get_forecast": "Weather forecast for a city and date",
+        "search_flights": "Find flights between two cities",
+        "convert_currency": "Convert an amount between currencies",
+        "none": "No tool is needed"
+      }
+    }
+  }
+}
